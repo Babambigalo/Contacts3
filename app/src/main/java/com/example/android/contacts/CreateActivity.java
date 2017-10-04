@@ -5,21 +5,26 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 public class CreateActivity extends AppCompatActivity {
-//    EditText et_Names = (EditText) findViewById(R.id.et_name);
-//    EditText et_Numbers = (EditText) findViewById(R.id.et_number);
+
+    public Intent toMainActivity = new Intent();
+    public EditText et_Names;
+    public EditText et_Numbers;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-//        final EditText et_Names = (EditText) findViewById(R.id.et_name);
-//        final EditText et_Numbers = (EditText) findViewById(R.id.et_number);
+
+
+        et_Names = (EditText)findViewById(R.id.et_name);
+        et_Numbers = (EditText)findViewById(R.id.et_number);
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
@@ -31,13 +36,17 @@ public class CreateActivity extends AppCompatActivity {
         fab.setImageResource(R.drawable.ic_check_hdpi);
 
 
+        Intent intentFromCreateActivity = getIntent();
 
-//        if (getIntent().getStringExtra("name")!= null){
-//            String dataName = getIntent().getStringExtra("name");
-//            String dataNumber = getIntent().getStringExtra("number");
-//            et_Names.setText(dataName);
-//            et_Numbers.setText(dataNumber);
-//        }
+        if(intentFromCreateActivity.hasExtra(ContactAdapter.numberFieldKey) == true ){
+//
+            String nameItem = intentFromCreateActivity.getStringExtra(ContactAdapter.nameFieldKey);
+            //Log.v("num field = " +intentFromCreateActivity.getStringExtra(ContactAdapter.numberFieldKey),"name field = " +intentFromCreateActivity.getStringExtra(ContactAdapter.nameFieldKey));
+            String numberItem = intentFromCreateActivity.getStringExtra(ContactAdapter.numberFieldKey);
+            et_Names.setText(nameItem);
+            et_Numbers.setText(numberItem);
+         }
+
 
 
 
@@ -46,14 +55,13 @@ public class CreateActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText et_Names = (EditText) findViewById(R.id.et_name);
-                EditText et_Numbers = (EditText) findViewById(R.id.et_number);
-                Log.v("et_names ","length = " + et_Names.getText().toString().length());
-                Intent toMainActivity = new Intent();
+
                 if (et_Names.length() != 0 & et_Numbers.length() != 0) {
 
                     toMainActivity.putExtra("name", et_Names.getText().toString());
                     toMainActivity.putExtra("number", et_Numbers.getText().toString());
+
+
 
                     setResult(RESULT_OK, toMainActivity);
                     finish();
@@ -77,8 +85,8 @@ public class CreateActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Intent toFirstActivity = new Intent();
-            setResult(RESULT_CANCELED, toFirstActivity);
+            //Intent toFirstActivity = new Intent();
+            setResult(RESULT_CANCELED, toMainActivity);
             finish();
         }
         return super.onKeyDown(keyCode, event);

@@ -15,9 +15,9 @@ import android.view.View;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
+    ContactAdapter mAdapter;
     public int REQUEST_CODE = 1;
-    ArrayList<Contact> contacts = new ArrayList<Contact>();
+    ArrayList<Contact> contacts = new ArrayList<>();
 
 
 
@@ -35,12 +35,13 @@ public class MainActivity extends AppCompatActivity {
         fab.setBackgroundResource(R.color.BackgroundIcon);
 
 
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent toCreateActivity = new Intent(MainActivity.this, CreateActivity.class);
-                Log.v("ASD","Intent = "+ getIntent());
+                //Log.v("ASD","Intent = "+ getIntent());
                 startActivityForResult(toCreateActivity, REQUEST_CODE);
 
 
@@ -54,35 +55,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                //EditText et_Names = (EditText) findViewById(R.id.et_name);
-                //EditText et_Numbers = (EditText) findViewById(R.id.et_number);
-                contacts.add(new Contact(data.getStringExtra("name"), data.getStringExtra("number")));
                 RecyclerView rv = (RecyclerView) findViewById(R.id.list);
                 rv.setHasFixedSize(true);
                 RecyclerView.LayoutManager layManager = new LinearLayoutManager(this );
                 rv.setLayoutManager(layManager);
-                ContactAdapter adapter = new ContactAdapter(contacts);
-                rv.setAdapter(adapter);
-            } else
-                return;
+                mAdapter = new ContactAdapter(contacts);
+                mAdapter.notifyDataSetChanged();
+                rv.setAdapter(mAdapter);
+                contacts.add(new Contact(data.getStringExtra("name"), data.getStringExtra("number")));
+                Log.v("asd","length = " + contacts.size());
+
+            }
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }

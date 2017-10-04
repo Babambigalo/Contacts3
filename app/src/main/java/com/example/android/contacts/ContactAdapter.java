@@ -1,12 +1,11 @@
 package com.example.android.contacts;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,7 +21,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     RecyclerView rv;
     TextView mName;
     TextView mNumber;
-    OnItemClickListener mItemClickListener;
+    Intent toCreateActivity;
+    public final static String nameFieldKey = "name";
+    public final static String numberFieldKey = "number";
+
+
 
 
 
@@ -39,19 +42,12 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
         @Override
         public void onClick(View view) {
-//            Intent toCreateActivity = new Intent();
-//            toCreateActivity.putExtra("name",mName.getText().toString());
-//            toCreateActivity.putExtra("number",mNumber.getText().toString());
-//
-//
-//
-            EditText et_name = itemView.findViewById(R.id.et_name);
-//            EditText et_number = itemView.findViewById(R.id.et_number);
-//            et_name.setText(mName.getText());
-//            et_number.setText(mNumber.getText());
-//
-//            itemView.getContext().startActivity(toCreateActivity);
-            Toast.makeText(itemView.getContext(),"et_name = " + mName.getText(),Toast.LENGTH_SHORT).show();
+            toCreateActivity = new Intent(view.getContext(),CreateActivity.class);
+            toCreateActivity.putExtra(nameFieldKey,mName.getText().toString());
+            toCreateActivity.putExtra(numberFieldKey,mNumber.getText().toString());
+
+            view.getContext().startActivity(toCreateActivity);
+
 
 
 
@@ -66,11 +62,12 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
 
 
-    ArrayList<Contact> contacts;
+    ArrayList<Contact> contacts = new ArrayList<>();
     public ContactAdapter(ArrayList<Contact> dataContacts) {
         contacts=dataContacts;
 
     }
+
 
 
     @Override
@@ -99,15 +96,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    //    @Override
-//    public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        View itemView = LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_2,parent,false);
-//
-//
-//    }
 
-
-//
 
 
 }
