@@ -28,6 +28,14 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        RecyclerView rv = (RecyclerView) findViewById(R.id.list);
+        rv.setHasFixedSize(true);
+        RecyclerView.LayoutManager layManager = new LinearLayoutManager(this );
+        rv.setLayoutManager(layManager);
+        mAdapter = new ContactAdapter(contacts);
+        mAdapter.notifyDataSetChanged();
+        rv.setAdapter(mAdapter);
+
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -55,14 +63,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                RecyclerView rv = (RecyclerView) findViewById(R.id.list);
-                rv.setHasFixedSize(true);
-                RecyclerView.LayoutManager layManager = new LinearLayoutManager(this );
-                rv.setLayoutManager(layManager);
-                mAdapter = new ContactAdapter(contacts);
-                mAdapter.notifyDataSetChanged();
-                rv.setAdapter(mAdapter);
                 contacts.add(new Contact(data.getStringExtra("name"), data.getStringExtra("number")));
+                //mAdapter.notifyDataSetChanged();
                 Log.v("asd","length = " + contacts.size());
 
             }
@@ -94,11 +96,26 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
     }
 
+//    @Override
+//    protected void onPause() {
+//
+//
+//        RecyclerView rv = (RecyclerView) findViewById(R.id.list);
+//        rv.setHasFixedSize(true);
+//        RecyclerView.LayoutManager layManager = new LinearLayoutManager(this );
+//        rv.setLayoutManager(layManager);
+//        mAdapter = new ContactAdapter(contacts);
+//        mAdapter.notifyDataSetChanged();
+//        rv.setAdapter(mAdapter);
+//
+//
+//
+//        super.onPause();
+//    }
+
     @Override
-    protected void onPause() {
-
-
-
-        super.onPause();
+    protected void onResume() {
+        mAdapter.notifyDataSetChanged();
+        super.onResume();
     }
 }

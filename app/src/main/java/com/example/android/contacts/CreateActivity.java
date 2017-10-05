@@ -13,8 +13,8 @@ import android.widget.Toast;
 public class CreateActivity extends AppCompatActivity {
 
     public Intent toMainActivity = new Intent();
-    public EditText et_Names;
-    public EditText et_Numbers;
+//    public EditText et_Names;
+//    public EditText et_Numbers;
 
 
     @Override
@@ -22,8 +22,8 @@ public class CreateActivity extends AppCompatActivity {
 
 
 
-        et_Names = (EditText)findViewById(R.id.et_name);
-        et_Numbers = (EditText)findViewById(R.id.et_number);
+//        EditText et_Names = (EditText)findViewById(R.id.et_name);
+//        EditText et_Numbers = (EditText)findViewById(R.id.et_number);
 
 
         super.onCreate(savedInstanceState);
@@ -36,13 +36,15 @@ public class CreateActivity extends AppCompatActivity {
         fab.setImageResource(R.drawable.ic_check_hdpi);
 
 
-        Intent intentFromCreateActivity = getIntent();
+        Intent intentFromMainActivity = getIntent();
 
-        if(intentFromCreateActivity.hasExtra(ContactAdapter.numberFieldKey) == true ){
-//
-            String nameItem = intentFromCreateActivity.getStringExtra(ContactAdapter.nameFieldKey);
-            //Log.v("num field = " +intentFromCreateActivity.getStringExtra(ContactAdapter.numberFieldKey),"name field = " +intentFromCreateActivity.getStringExtra(ContactAdapter.nameFieldKey));
-            String numberItem = intentFromCreateActivity.getStringExtra(ContactAdapter.numberFieldKey);
+        if(intentFromMainActivity.hasExtra(ContactAdapter.numberFieldKey) == true ){
+
+            EditText et_Names = (EditText)findViewById(R.id.et_name);
+            EditText et_Numbers = (EditText)findViewById(R.id.et_number);
+
+            String nameItem = intentFromMainActivity.getStringExtra(ContactAdapter.nameFieldKey);
+            String numberItem = intentFromMainActivity.getStringExtra(ContactAdapter.numberFieldKey);
             et_Names.setText(nameItem);
             et_Numbers.setText(numberItem);
          }
@@ -55,6 +57,9 @@ public class CreateActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Log.v("et_nam= " + et_Names.length(),"et_num = "+ et_Numbers.length());
+                EditText et_Names = (EditText)findViewById(R.id.et_name);
+                EditText et_Numbers = (EditText)findViewById(R.id.et_number);
 
                 if (et_Names.length() != 0 & et_Numbers.length() != 0) {
 
@@ -71,7 +76,8 @@ public class CreateActivity extends AppCompatActivity {
                     Toast.makeText(CreateActivity.this, "Please,enter contact's name", Toast.LENGTH_SHORT).show();
                 } else if (et_Numbers.length() == 0) {
                     Toast.makeText(CreateActivity.this, "Please,enter contact's phone number ", Toast.LENGTH_SHORT).show();
-                }
+                }else return;
+
 
 
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)

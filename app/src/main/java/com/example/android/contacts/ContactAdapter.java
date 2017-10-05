@@ -33,7 +33,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
        public ContactViewHolder(View itemView){
            super(itemView);
            itemView.setOnClickListener(this);
-           rv = itemView.findViewById(android.R.layout.simple_list_item_2);
+           rv = itemView.findViewById(R.id.list);
+           //rv = itemView.findViewById(android.R.layout.simple_list_item_2);
            mName = itemView.findViewById(android.R.id.text1);
            //mNumber = itemView.findViewById(android.R.id.text2);
            mNumber = itemView.findViewById(android.R.id.text2);
