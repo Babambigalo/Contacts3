@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 contacts.add(new Contact(data.getStringExtra("name"), data.getStringExtra("number")));
-                //mAdapter.notifyDataSetChanged();
+                mAdapter.notifyDataSetChanged();
                 Log.v("asd","length = " + contacts.size());
 
             }

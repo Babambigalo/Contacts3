@@ -13,17 +13,16 @@ import android.widget.Toast;
 public class CreateActivity extends AppCompatActivity {
 
     public Intent toMainActivity = new Intent();
-//    public EditText et_Names;
-//    public EditText et_Numbers;
-
+//    public  EditText et_Names;
+//    public  EditText et_Numbers;
+//    final EditText  et_Names = (EditText)findViewById(R.id.et_name);
+//    final EditText et_Numbers = (EditText)findViewById(R.id.et_number);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
 
 
-//        EditText et_Names = (EditText)findViewById(R.id.et_name);
-//        EditText et_Numbers = (EditText)findViewById(R.id.et_number);
 
 
         super.onCreate(savedInstanceState);
@@ -38,13 +37,13 @@ public class CreateActivity extends AppCompatActivity {
 
         Intent intentFromMainActivity = getIntent();
 
-        if(intentFromMainActivity.hasExtra(ContactAdapter.numberFieldKey) == true ){
+        if(intentFromMainActivity.hasExtra("name") ){
 
-            EditText et_Names = (EditText)findViewById(R.id.et_name);
-            EditText et_Numbers = (EditText)findViewById(R.id.et_number);
+           EditText et_Names = (EditText)findViewById(R.id.et_name);
+           EditText et_Numbers = (EditText)findViewById(R.id.et_number);
 
-            String nameItem = intentFromMainActivity.getStringExtra(ContactAdapter.nameFieldKey);
-            String numberItem = intentFromMainActivity.getStringExtra(ContactAdapter.numberFieldKey);
+            String nameItem = intentFromMainActivity.getStringExtra("name");
+            String numberItem = intentFromMainActivity.getStringExtra("number");
             et_Names.setText(nameItem);
             et_Numbers.setText(numberItem);
          }

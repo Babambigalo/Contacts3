@@ -22,14 +22,14 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     TextView mName;
     TextView mNumber;
     Intent toCreateActivity;
-    public final static String nameFieldKey = "name";
-    public final static String numberFieldKey = "number";
+//    public final static String nameFieldKey = "name";
+//    public final static String numberFieldKey = "number";
 
 
 
 
 
-    public class ContactViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ContactViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
        public ContactViewHolder(View itemView){
            super(itemView);
            itemView.setOnClickListener(this);
@@ -44,10 +44,13 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         @Override
         public void onClick(View view) {
             toCreateActivity = new Intent(view.getContext(),CreateActivity.class);
-            toCreateActivity.putExtra(nameFieldKey,mName.getText().toString());
-            toCreateActivity.putExtra(numberFieldKey,mNumber.getText().toString());
+            toCreateActivity.putExtra("name",mName.getText().toString());
+            toCreateActivity.putExtra("number",mNumber.getText().toString());
+            //Toast.makeText(view.getContext(),"CLICK",Toast.LENGTH_SHORT).show();
 
             view.getContext().startActivity(toCreateActivity);
+
+
 
 
 
@@ -90,6 +93,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     public void onBindViewHolder(ContactViewHolder holder, int position) {
         mName.setText(contacts.get(position).getContactName());
         mNumber.setText(contacts.get(position).getContactNumber());
+
     }
 
     @Override
